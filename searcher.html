@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searcher</title>
+    <style>
+      .div {
+        text-align: center;
+      }
+
+      .input-field {
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+      .button {
+        padding-left: 55px;
+        padding-right: 55px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: rgb(108, 52, 131);
+        color: aliceblue;
+        font-weight: bolder;
+        font-size: larger;
+      }
+    </style>
+  </head>
+<body>
+
+  <div class="div">
+    <h2>Search Form</h2>
+    <form id="searchForm">
+      <label for="num">Enter the number of searches:</label><br>
+      <input type="number" id="num" name="num" min="1" class="input-field"><br>
+      <input type="submit" value="Search" class="button">
+    </form>
+  </div>
+
+<script>
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      document.getElementById('num').value = 20; // Set default value to 20 for phones
+    } else {
+      document.getElementById('num').value = 30; // Set default value to 30 for desktops
+    }
+
+  document.getElementById('searchForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    var num = document.getElementById('num').value;
+
+    // Arrays for food and topics (1)
+    var foodArray = [
+    'apple', 
+    'banana', 
+    'carrot', 
+    'spinach', 
+    'mutton', 
+    'beef', 
+    'chicken', 
+    'lettuce', 
+    'tomato', 
+    'potato', 
+    'onion', 
+    'broccoli', 
+    'pepper', 
+    'cucumber', 
+    'pumpkin', 
+    'squash', 
+    'zucchini', 
+    'orange', 
+    'lemon', 
+    'lime', 
+    'grape', 
+    'kiwi', 
+    'melon', 
+    'pear', 
+    'pineapple', 
+    'blueberry', 
+    'raspberry', 
+    'strawberry', 
+    'blackberry'
+    ];
+
+    var topicArray = [
+    'recipe', 
+    'benefits', 
+    'uses', 
+    'facts', 
+    'nutrition', 
+    'health', 
+    'diet', 
+    'cooking', 
+    'smoothie', 
+    'juice', 
+    'salad', 
+    'snack', 
+    'meal', 
+    'dessert', 
+    'breakfast', 
+    'lunch', 
+    'dinner', 
+    'vegan', 
+    'vegetarian', 
+    'gluten-free', 
+    'paleo', 
+    'keto', 
+    'low-carb', 
+    'high-protein', 
+    'weight loss', 
+    'muscle building', 
+    'immune boosting', 
+    'heart healthy', 
+    'brain food', 
+    'anti-inflammatory'
+    ];
+    
+    // Arrays for cars and features (2)
+    var carArray = [
+    'Toyota', 
+    'Honda', 
+    'Ford', 
+    'Chevrolet', 
+    'BMW', 
+    'Mercedes-Benz', 
+    'Audi', 
+    'Tesla', 
+    'Volkswagen', 
+    'Subaru', 
+    'Lexus', 
+    'Hyundai', 
+    'Kia', 
+    'Mazda', 
+    'Nissan', 
+    'Jeep', 
+    'Volvo', 
+    'Porsche', 
+    'Cadillac', 
+    'Buick'
+    ];
+
+    var featureArray = [
+    'engine', 
+    'safety', 
+    'design', 
+    'technology', 
+    'fuel efficiency', 
+    'performance', 
+    'comfort', 
+    'reliability', 
+    'handling', 
+    'luxury', 
+    'affordability', 
+    'innovation', 
+    'style', 
+    'environmental friendliness', 
+    'space', 
+    'infotainment system', 
+    'resale value', 
+    'maintenance cost', 
+    'driving experience', 
+    'brand reputation'
+    ];
+
+    // Arrays for actors/actresses and facts (3)
+    var actorArray = [
+    'Tom Hanks', 
+    'Meryl Streep', 
+    'Leonardo DiCaprio', 
+    'Julia Roberts', 
+    'Denzel Washington', 
+    'Jennifer Lawrence', 
+    'Brad Pitt', 
+    'Angelina Jolie', 
+    'Johnny Depp', 
+    'Emma Stone', 
+    'Matt Damon', 
+    'Charlize Theron', 
+    'Robert Downey Jr.', 
+    'Scarlett Johansson', 
+    'Will Smith', 
+    'Natalie Portman', 
+    'George Clooney', 
+    'Cate Blanchett', 
+    'Chris Hemsworth', 
+    'Sandra Bullock'
+    ];
+
+    var factArray = [
+    'Oscar winner', 
+    'box office success', 
+    'philanthropist', 
+    'iconic role', 
+    'awards nominee', 
+    'charity work', 
+    'critically acclaimed', 
+    'blockbuster hit', 
+    'humanitarian efforts', 
+    'cultural influence', 
+    'versatile talent', 
+    'global recognition', 
+    'filmography', 
+    'dedicated fanbase', 
+    'multitalented', 
+    'media attention', 
+    'industry respect', 
+    'career milestones', 
+    'role model', 
+    'public persona'
+    ];
+
+    // Landmark array (4)
+    var landmarkArray = [
+    'Statue of Liberty',
+    'Great Wall of China',
+    'Taj Mahal',
+    'Christ the Redeemer',
+    'Saint Basil\'s Cathedral',
+    'Big Ben',
+    'Eiffel Tower',
+    'Neuschwanstein Castle',
+    'Mount Fuji',
+    'CN Tower',
+    'Colosseum',
+    'N Seoul Tower',
+    'Sydney Opera House',
+    'Sagrada Família',
+    'Chichen Itza',
+    'Borobudur',
+    'Windmills of Kinderdijk',
+    'Hagia Sophia',
+    'Al-Masjid al-Haram',
+    'Matterhorn'
+    ];
+
+    // Country array (5)
+    var countryArray = [
+    'United States', 
+    'China',
+    'India',
+    'Brazil',
+    'Russia',
+    'United Kingdom',
+    'France',
+    'Germany',
+    'Japan',
+    'Canada',
+    'Italy',
+    'South Korea',
+    'Australia',
+    'Spain',
+    'Mexico',
+    'Indonesia',
+    'Netherlands',
+    'Turkey',
+    'Saudi Arabia',
+    'Switzerland'];
+
+    // Books array (6)
+    var bookArray = [
+    'Harry Potter', 
+    'To Kill a Mockingbird', 
+    'The Great Gatsby', 
+    'Pride and Prejudice', 
+    '1984', 
+    'The Catcher in the Rye', 
+    'The Lord of the Rings', 
+    'The Hobbit', 
+    'The Da Vinci Code', 
+    'The Hunger Games', 
+    'The Alchemist', 
+    'Gone Girl', 
+    'The Girl on the Train', 
+    'The Shining', 
+    'The Chronicles of Narnia', 
+    'The Fault in Our Stars', 
+    'The Godfather', 
+    'The Kite Runner', 
+    'The Help', 
+    'The Handmaid\'s Tale'
+    ];
+
+    // Genre array (7)
+    var genreArray = [
+    'fiction', 
+    'mystery', 
+    'thriller', 
+    'romance', 
+    'fantasy', 
+    'science fiction', 
+    'horror', 
+    'dystopian', 
+    'young adult', 
+    'classic', 
+    'historical fiction', 
+    'adventure', 
+    'crime', 
+    'biography', 
+    'memoir', 
+    'self-help', 
+    'science', 
+    'philosophy', 
+    'poetry', 
+    'business'
+    ];
+    
+    // Movies array (8)
+    var movieArray = [
+    'The Shawshank Redemption', 
+    'The Godfather', 
+    'The Dark Knight', 
+    'Pulp Fiction', 
+    'Schindler\'s List', 
+    'Forrest Gump', 
+    'The Lord of the Rings', 
+    'The Matrix', 
+    'Star Wars', 
+    'Inception', 
+    'The Silence of the Lambs', 
+    'Jurassic Park', 
+    'The Lion King', 
+    'Gladiator', 
+    'Titanic', 
+    'Avatar', 
+    'Back to the Future', 
+    'Indiana Jones', 
+    'Fight Club', 
+    'The Avengers'
+    ];
+
+    // Director array (9)
+    var directorArray = [
+    'Steven Spielberg', 
+    'Martin Scorsese', 
+    'Christopher Nolan', 
+    'Quentin Tarantino', 
+    'Alfred Hitchcock', 
+    'Stanley Kubrick', 
+    'James Cameron', 
+    'Tim Burton', 
+    'Francis Ford Coppola', 
+    'Ridley Scott', 
+    'Peter Jackson', 
+    'George Lucas', 
+    'Clint Eastwood', 
+    'Spike Lee', 
+    'Woody Allen', 
+    'David Fincher', 
+    'Wes Anderson', 
+    'Coen Brothers', 
+    'Steven Soderbergh', 
+    'Darren Aronofsky'
+    ];
+
+    // Surah array (10)
+    var surahArray = [
+    'Al-Fatiha',
+    'Al-Baqarah', 
+    'Al-Imran', 
+    'An-Nisa', 
+    'Al-Maidah', 
+    'Al-Anam', 
+    'Al-Araf', 
+    'Al-Anfal', 
+    'At-Tawbah', 
+    'Yunus', 
+    'Hud', 
+    'Yusuf', 
+    'Ar-Rad', 
+    'Ibrahim', 
+    'Al-Hijr', 
+    'An-Nahl', 
+    'Al-Isra', 
+    'Al-Kahf', 
+    'Maryam', 
+    'Ta-Ha'
+    ];
+
+  var sleep = function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function getRandomItemFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+  }
+
+  for (var i = 0; i < num; i++) {
+    // Randomly choose one set of arrays
+    var setIndex = Math.floor(Math.random() * 10);
+    
+    var word1, word2;
+    if (setIndex === 0) {
+      word1 = getRandomItemFromArray(foodArray);
+      word2 = getRandomItemFromArray(topicArray);
+    } else if (setIndex === 1) {
+      word1 = getRandomItemFromArray(carArray);
+      word2 = getRandomItemFromArray(featureArray);
+    } else if (setIndex == 2) {
+      word1 = getRandomItemFromArray(actorArray);
+      word2 = getRandomItemFromArray(factArray);
+    } else if (setIndex == 3) {
+      word1 = getRandomItemFromArray(landmarkArray);
+      word2 = "";
+    } else if (setIndex == 4) {
+      word1 = getRandomItemFromArray(countryArray);
+      word2 = "";
+    } else if (setIndex == 5) {
+      word1 = getRandomItemFromArray(bookArray);
+      word2 = "";
+    } else if (setIndex == 6) {
+      word1 = getRandomItemFromArray(genreArray);
+      word2 = "movies";
+    } else if (setIndex == 7) {
+      word1 = getRandomItemFromArray(movieArray);
+      word2 = "";
+    } else if (setIndex == 8) {
+      word1 = getRandomItemFromArray(directorArray);
+      word2 = "";
+    } else if (setIndex == 9) {
+      word1 = "surah";
+      word2 = getRandomItemFromArray(surahArray);
+    }
+
+    // Generate a random search query combining word1 and word2
+    var searchQuery = encodeURIComponent(word1 + ' ' + word2);
+    // Open a new tab with the search query
+    var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
+    await sleep(5000);
+    win.close();
+    await sleep(500);
+  }
+});
+</script>
+
+</body>
+</html>
