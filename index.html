@@ -16,6 +16,8 @@
         margin-top: 20px;
         border-radius: 10px;
         text-align: center;
+        border: 2px solid rgba(214, 56, 143, 0.836);
+        box-shadow: 5px 2px 40px 2px;
       }
       .button {
         width: 307px;
@@ -31,12 +33,15 @@
         border: 0px;
         border-radius: 10px;
       }
+      .button:hover {
+        background-color: rgba(110, 12, 128, 0.651);
+      }
     </style>
   </head>
 <body>
 
   <div class="div">
-    <h2>Search Form</h2>
+    <h2>Automatic Searcher</h2>
     <form id="searchForm">
       <label for="num">Enter the number of searches:</label><br>
       <input type="number" id="num" name="num" min="1" class="input-field"><br>
