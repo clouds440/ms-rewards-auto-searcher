@@ -9,20 +9,27 @@
       }
 
       .input-field {
-        padding-bottom: 10px;
-        padding-top: 10px;
+        width: 300px;
+        padding-bottom: 15px;
+        padding-top: 15px;
         margin-bottom: 20px;
         margin-top: 20px;
+        border-radius: 10px;
+        text-align: center;
       }
       .button {
+        width: 307px;
         padding-left: 55px;
         padding-right: 55px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        background-color: rgb(108, 52, 131);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: rgba(214, 56, 143, 0.836);
         color: aliceblue;
         font-weight: bolder;
         font-size: larger;
+        cursor: pointer;
+        border: 0px;
+        border-radius: 10px;
       }
     </style>
   </head>
@@ -47,6 +54,50 @@
   document.getElementById('searchForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     var num = document.getElementById('num').value;
+
+  var sleep = function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function getRandomItemFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+  }
+
+  for (var i = 0; i < num; i++) {
+    // Randomly choose one set of arrays
+    var setIndex = Math.floor(Math.random() * 13);
+    
+    var word1 = setIndex === 0 ? getRandomItemFromArray(foodArray) :
+            setIndex === 1 ? getRandomItemFromArray(carArray) :
+            setIndex === 2 ? getRandomItemFromArray(actorArray) :
+            setIndex === 3 ? getRandomItemFromArray(landmarkArray) :
+            setIndex === 4 ? getRandomItemFromArray(countryArray) :
+            setIndex === 5 ? getRandomItemFromArray(bookArray) :
+            setIndex === 6 ? getRandomItemFromArray(genreArray) :
+            setIndex === 7 ? getRandomItemFromArray(movieArray) :
+            setIndex === 8 ? getRandomItemFromArray(directorArray) :
+            setIndex === 9 ? "surah" :
+            setIndex === 10 ? getRandomItemFromArray(technicalSearches) :
+            setIndex === 11 ? getRandomItemFromArray(gamingSearches) :
+            setIndex === 12 ? getRandomItemFromArray(pcSearches) :
+            null; // Handle the invalid setIndex value
+
+    var word2 = setIndex === 0 ? getRandomItemFromArray(topicArray) :
+            setIndex === 1 ? getRandomItemFromArray(featureArray) :
+            setIndex === 2 ? getRandomItemFromArray(factArray) :
+            setIndex === 6 ? "movies" :
+            setIndex === 9 ? getRandomItemFromArray(surahArray) :
+            ""; // Use "" as the default value for word2
+
+    // Generate a random search query combining word1 and word2
+    var searchQuery = encodeURIComponent(word1 + ' ' + word2);
+    // Open a new tab with the search query
+    var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
+    await sleep(3000);
+    win.close();
+    await sleep(200);
+  }
+});
 
     // Arrays for food and topics (1)
     var foodArray = [
@@ -375,60 +426,227 @@
     'Ta-Ha'
     ];
 
-  var sleep = function(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+    // technical array
+    var technicalSearches = [
+    'JavaScript tutorial',
+    'Python programming language',
+    'HTML5 vs HTML',
+    'CSS frameworks comparison',
+    'Java development tools',
+    'Machine learning algorithms',
+    'Cloud computing platforms',
+    'Web development best practices',
+    'Cybersecurity techniques',
+    'Data science libraries',
+    'Artificial intelligence applications',
+    'Mobile app development trends',
+    'Software testing methodologies',
+    'Blockchain technology explained',
+    'UI/UX design principles',
+    'DevOps practices',
+    'Internet of Things (IoT) devices',
+    'Networking protocols overview',
+    'Database management systems',
+    'Agile project management techniques'
+    ];
 
-  function getRandomItemFromArray(array) {
-  return array[Math.floor(Math.random() * array.length)];
-  }
+    // gaming array
+    var gamingSearches = [
+    'Best gaming laptops',
+    'Top video game releases',
+    'Gaming mouse reviews',
+    'Console vs PC gaming',
+    'Popular gaming genres',
+    'Esports tournaments schedule',
+    'Gaming headset recommendations',
+    'Gaming keyboard features',
+    'Video game streaming platforms',
+    'VR gaming experiences',
+    'Mobile gaming trends',
+    'Gaming industry news',
+    'Game development tutorials',
+    'Gaming community forums',
+    'Game cheat codes and hacks',
+    'Gaming accessories buying guide',
+    'Retro gaming consoles',
+    'Online multiplayer games',
+    'Gaming performance optimization',
+    'Gaming chair reviews'
+    ];
 
-  for (var i = 0; i < num; i++) {
-    // Randomly choose one set of arrays
-    var setIndex = Math.floor(Math.random() * 10);
-    
-    var word1, word2;
-    if (setIndex === 0) {
-      word1 = getRandomItemFromArray(foodArray);
-      word2 = getRandomItemFromArray(topicArray);
-    } else if (setIndex === 1) {
-      word1 = getRandomItemFromArray(carArray);
-      word2 = getRandomItemFromArray(featureArray);
-    } else if (setIndex == 2) {
-      word1 = getRandomItemFromArray(actorArray);
-      word2 = getRandomItemFromArray(factArray);
-    } else if (setIndex == 3) {
-      word1 = getRandomItemFromArray(landmarkArray);
-      word2 = "";
-    } else if (setIndex == 4) {
-      word1 = getRandomItemFromArray(countryArray);
-      word2 = "";
-    } else if (setIndex == 5) {
-      word1 = getRandomItemFromArray(bookArray);
-      word2 = "";
-    } else if (setIndex == 6) {
-      word1 = getRandomItemFromArray(genreArray);
-      word2 = "movies";
-    } else if (setIndex == 7) {
-      word1 = getRandomItemFromArray(movieArray);
-      word2 = "";
-    } else if (setIndex == 8) {
-      word1 = getRandomItemFromArray(directorArray);
-      word2 = "";
-    } else if (setIndex == 9) {
-      word1 = "surah";
-      word2 = getRandomItemFromArray(surahArray);
-    }
+    // PC array
+    var pcSearches = [
+  'Best gaming laptops under $1000',
+  'Gaming laptop vs desktop performance',
+  'Laptop cooling pads review',
+  'Custom PC build guide for beginners',
+  'GPU benchmarks comparison',
+  'CPU overclocking tutorials',
+  'SSD vs HDD speed test',
+  'RAM upgrade compatibility checker',
+  'Motherboard buying guide 2024',
+  'Graphics card compatibility with games',
+  'Power supply unit (PSU) wattage calculator',
+  'PC case airflow optimization tips',
+  'Water cooling system installation steps',
+  'Monitor refresh rates explained',
+  'Best mechanical keyboards for typing',
+  'Wireless gaming mouse vs wired',
+  'External hard drive reviews',
+  'CPU thermal paste application techniques',
+  'PC build budget breakdown',
+  'RGB lighting setup ideas for PC enthusiasts',
+  'Intel vs AMD processor comparison',
+  'GPU driver update best practices',
+  'SSD lifespan and endurance testing',
+  'RAM timing and latency explanation',
+  'Motherboard form factors overview',
+  'Graphics card price-performance analysis',
+  'Power supply efficiency ratings guide',
+  'PC case modding inspiration gallery',
+  'Water cooling vs air cooling pros and cons',
+  'Monitor panel types comparison',
+  'Mechanical keyboard switch types guide',
+  'Gaming mouse sensor technology deep dive',
+  'External SSD vs HDD speed test',
+  'CPU thermal management solutions',
+  'PC build cost-saving tips',
+  'Custom PC case designs showcase',
+  'RGB lighting software comparison',
+  'Intel vs AMD CPU benchmarks 2024',
+  'GPU overclocking safety measures',
+  'SSD vs HDD longevity comparison',
+  'RAM speed vs CAS latency impact',
+  'Motherboard VRM cooling solutions',
+  'Graphics card power consumption analysis',
+  'Power supply cable management techniques',
+  'PC case airflow simulation tools',
+  'Water cooling system maintenance guide',
+  'Monitor resolution vs refresh rate tradeoff',
+  'Mechanical keyboard keycap materials guide',
+  'Gaming mouse grip styles analysis',
+  'External storage device reliability comparison',
+  'CPU delidding pros and cons',
+  'PC build future-proofing strategies',
+  'Custom PC case painting tutorial',
+  'RGB lighting effects tutorial',
+  'Intel vs AMD CPU price-performance analysis',
+  'GPU undervolting benefits',
+  'SSD optimization tips for longevity',
+  'RAM overclocking stability testing',
+  'Motherboard chipset comparison',
+  'Graphics card memory types overview',
+  'Power supply efficiency optimization guide',
+  'PC case cable management showcase',
+  'Water cooling system leak prevention methods',
+  'Monitor response time explanation',
+  'Mechanical keyboard switch lubrication guide',
+  'Gaming mouse DPI settings optimization',
+  'External storage device speed test',
+  'CPU cooling solutions roundup',
+  'PC build upgrade paths analysis',
+  'Custom PC case window modding tutorial',
+  'RGB lighting synchronization options',
+  'Intel vs AMD CPU power consumption analysis',
+  'GPU temperature monitoring techniques',
+  'SSD performance degradation prevention',
+  'RAM compatibility with Ryzen processors',
+  'Motherboard BIOS update process',
+  'Graphics card driver optimization guide',
+  'Power supply unit cable sleeving tutorial',
+  'PC case airflow demonstration video',
+  'Water cooling system troubleshooting tips',
+  'Monitor calibration techniques',
+  'Mechanical keyboard switch swap tutorial',
+  'Gaming mouse acceleration analysis',
+  'External storage device durability comparison',
+  'CPU thermal throttling prevention techniques',
+  'PC build aesthetic customization ideas',
+  'Custom PC case modding materials guide',
+  'RGB lighting software customization tutorial',
+  'Intel vs AMD CPU overclocking comparison',
+  'GPU fan curve optimization',
+  'SSD data retention testing',
+  'RAM overclocking voltage requirements',
+  'Motherboard VRM phase count importance',
+  'Graphics card VRAM usage analysis',
+  'Power supply unit efficiency testing',
+  'PC case cable routing best practices',
+  'Water cooling system leak detection methods',
+  'Monitor refresh rate overclocking guide',
+  'Mechanical keyboard switch soldering tutorial',
+  'Gaming mouse sensor accuracy testing',
+  'External storage device speed comparison',
+  'CPU temperature monitoring software roundup',
+  'PC build expansion slot utilization ideas',
+  'Custom PC case paint removal tutorial',
+  'RGB lighting synchronization software comparison',
+  'Intel vs AMD CPU gaming performance comparison',
+  'GPU thermal paste replacement tutorial',
+  'SSD data recovery techniques',
+  'RAM overclocking stability testing software',
+  'Motherboard compatibility with high-speed RAM',
+  'Graphics card noise level comparison',
+  'Power supply unit load testing procedures',
+  'PC case airflow optimization case study',
+  'Water cooling system pump troubleshooting guide',
+  'Monitor color accuracy calibration',
+  'Mechanical keyboard switch sound comparison',
+  'Gaming mouse acceleration impact analysis',
+  'External storage device portability comparison',
+  'CPU cooler installation tutorial',
+  'PC build cable management accessories roundup',
+  'Custom PC case window cutting tutorial',
+  'RGB lighting software integration guide',
+  'Intel vs AMD CPU power efficiency comparison',
+  'GPU coil whine reduction techniques',
+  'SSD data retention duration analysis',
+  'RAM overclocking voltage tuning guide',
+  'Motherboard VRM thermal performance testing',
+  'Graphics card VRAM overclocking tutorial',
+  'Power supply unit efficiency certification standards',
+  'PC case dust filter cleaning tutorial',
+  'Water cooling system pump maintenance guide',
+  'Monitor color calibration hardware options',
+  'Mechanical keyboard switch lubrication comparison',
+  'Gaming mouse jitter testing methods',
+  'External storage device ruggedness comparison',
+  'CPU thermal paste application tutorial',
+  'PC build expansion slot utilization examples',
+  'Custom PC case vinyl wrap tutorial',
+  'RGB lighting software configuration tutorial',
+  'Intel vs AMD CPU price-performance-per-watt comparison',
+  'GPU driver optimization software review',
+  'SSD endurance testing methodology',
+  'RAM overclocking stability testing methodology',
+  'Motherboard compatibility with ECC RAM',
+  'Graphics card overclocking safety measures',
+  'Power supply unit ripple suppression techniques',
+  'PC case fan placement guide',
+  'Water cooling system radiator size selection',
+  'Monitor response time vs input lag comparison',
+  'Mechanical keyboard switch lifespan comparison',
+  'Gaming mouse jitter reduction techniques',
+  'External storage device shock resistance comparison',
+  'CPU cooler performance comparison',
+  'PC build cable management accessories review',
+  'Custom PC case acrylic panel installation tutorial',
+  'RGB lighting synchronization software tutorial',
+  'Intel vs AMD CPU gaming performance-per-watt comparison',
+  'GPU temperature monitoring software review',
+  'SSD endurance testing results',
+  'RAM overclocking stability testing results',
+  'Motherboard compatibility with ECC RAM modules',
+  'Graphics card overclocking stability testing results',
+  'Power supply unit efficiency certification testing results',
+  'PC case fan placement optimization results',
+  'Water cooling system radiator size optimization results',
+  'Monitor refresh rate vs input lag comparison results',
+  'Mechanical keyboard switch lifespan testing results',
+  'Gaming mouse jitter reduction techniques effectiveness',
+  'External storage device shock resistance testing results'
+  ];
 
-    // Generate a random search query combining word1 and word2
-    var searchQuery = encodeURIComponent(word1 + ' ' + word2);
-    // Open a new tab with the search query
-    var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
-    await sleep(5000);
-    win.close();
-    await sleep(500);
-  }
-});
 </script>
 
 </body>
