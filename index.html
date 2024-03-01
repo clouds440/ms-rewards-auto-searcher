@@ -19,6 +19,9 @@
         border: 2px solid rgba(214, 56, 143, 0.836);
         box-shadow: 5px 2px 40px 2px;
       }
+      .input-field:focus {
+        background-color: #fcdcfc;
+      }
       .button {
         width: 307px;
         padding-left: 55px;
@@ -36,14 +39,19 @@
       .button:hover {
         background-color: rgba(110, 12, 128, 0.651);
       }
+      .font {
+        color: white;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bolder;
+      }
     </style>
   </head>
-<body>
+<body bgcolor="#34495E">
 
   <div class="div">
-    <h2>Automatic Searcher</h2>
+    <h2 class="font">Automatic Searcher</h2>
     <form id="searchForm">
-      <label for="num">Enter the number of searches:</label><br>
+      <label for="num" class="font">Enter the number of searches:</label><br>
       <input type="number" id="num" name="num" min="1" class="input-field"><br>
       <input type="submit" value="Search" class="button">
     </form>
@@ -98,9 +106,9 @@
     var searchQuery = encodeURIComponent(word1 + ' ' + word2);
     // Open a new tab with the search query
     var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
-    await sleep(3000);
+    await sleep(5000);
     win.close();
-    await sleep(200);
+    await sleep(150);
   }
 });
 
