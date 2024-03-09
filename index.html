@@ -6,10 +6,12 @@
     <style>
       .div {
         text-align: center;
+        width: fit-content;
+        margin: 0 auto;
       }
 
       .input-field {
-        width: 300px;
+        width: 97%;
         padding-bottom: 15px;
         padding-top: 15px;
         margin-bottom: 20px;
@@ -22,12 +24,15 @@
       .input-field:focus {
         background-color: #fcdcfc;
       }
+      .button-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        width: 100%;
+        margin-top: 10px;
+      }
       .button {
-        width: 307px;
-        padding-left: 55px;
-        padding-right: 55px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 10px;
         background-color: rgba(214, 56, 143, 0.836);
         color: aliceblue;
         font-weight: bolder;
@@ -38,6 +43,12 @@
       }
       .button:hover {
         background-color: rgba(110, 12, 128, 0.651);
+      }
+      .button-search {
+        margin-top: 20px;
+        width: 310px;
+        padding-left: 55px;
+        padding-right: 55px;
       }
       .font {
         color: white;
@@ -52,8 +63,26 @@
     <h2 class="font">Automatic Searcher</h2>
     <form id="searchForm">
       <label for="num" class="font">Enter the number of searches:</label><br>
-      <input type="number" id="num" name="num" min="1" class="input-field"><br>
-      <input type="submit" value="Search" class="button">
+      <input type="number" id="num" name="num" min="1" class="input-field">
+      <br>
+  
+      <div class="button-container btn-div">
+        <!-- Numerical buttons -->
+          <button type="button" class="button" onclick="document.getElementById('num').value = 5;"> 5 </button>
+          <button type="button" class="button" onclick="document.getElementById('num').value = 30;"> 30 </button>
+
+          <button type="button" class="button" onclick="document.getElementById('num').value = parseInt(document.getElementById('num').value) + 5;">▲5</button>
+
+          <button type="button" class="button" onclick="document.getElementById('num').value = 10;"> 10 </button>
+          <button type="button" class="button" onclick="document.getElementById('num').value = 35;"> 35 </button>
+
+          <button type="button" class="button" onclick="document.getElementById('num').value = parseInt(document.getElementById('num').value) - 5;">▼5</button>
+
+          <button type="button" class="button" onclick="document.getElementById('num').value = 20;"> 20 </button>
+          <button type="button" class="button" onclick="document.getElementById('num').value = 40;"> 40 </button>
+      </div>
+      <br>
+      <input type="submit" value="Search" class="button button-search">
     </form>
   </div>
 
@@ -63,6 +92,12 @@
     } else {
       document.getElementById('num').value = 30; // Set default value to 30 for desktops
     }
+
+    document.getElementById('num').addEventListener('blur', function() {
+    if (this.value < 1) {
+      this.value = 1;
+    }
+  });
 
   document.getElementById('searchForm').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -106,9 +141,9 @@
     var searchQuery = encodeURIComponent(word1 + ' ' + word2);
     // Open a new tab with the search query
     var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
-    await sleep(5550);
+    await sleep(5000);
     win.close();
-    await sleep(550);
+    await sleep(500);
   }
 });
 
