@@ -9,6 +9,11 @@
         width: fit-content;
         margin: 0 auto;
       }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
 
       .input-field {
         width: 97%;
@@ -18,11 +23,14 @@
         margin-top: 20px;
         border-radius: 10px;
         text-align: center;
-        border: 2px solid rgba(214, 56, 143, 0.836);
+        border: 2px solid rgba(6, 144, 243, 0.836);
         box-shadow: 5px 2px 40px 2px;
+        background-color: aliceblue;
       }
       .input-field:focus {
-        background-color: #fcdcfc;
+        background-color: #ddebfa;
+        box-shadow: 10px 10px 50px 3px;
+        outline: none;
       }
       .button-container {
         display: grid;
@@ -33,7 +41,7 @@
       }
       .button {
         padding: 10px;
-        background-color: rgba(214, 56, 143, 0.836);
+        background-color: rgba(6, 144, 243, 0.836);
         color: aliceblue;
         font-weight: bolder;
         font-size: larger;
@@ -42,7 +50,7 @@
         border-radius: 10px;
       }
       .button:hover {
-        background-color: rgba(110, 12, 128, 0.651);
+        background-color: rgba(38, 100, 170, 0.822);
       }
       .button-search {
         margin-top: 20px;
@@ -63,11 +71,11 @@
     <h2 class="font">Automatic Searcher</h2>
     <form id="searchForm">
       <label for="num" class="font">Enter the number of searches:</label><br>
-      <input type="number" id="num" name="num" min="1" class="input-field">
+      <input type="number" id="num" name="num" min="1" max="50" class="input-field">
       <br>
   
+      <!-- Numerical buttons -->
       <div class="button-container btn-div">
-        <!-- Numerical buttons -->
           <button type="button" class="button" onclick="document.getElementById('num').value = 5;"> 5 </button>
           <button type="button" class="button" onclick="document.getElementById('num').value = 30;"> 30 </button>
 
@@ -94,7 +102,7 @@
     }
 
     document.getElementById('num').addEventListener('blur', function() {
-    if (this.value < 1) {
+    if (this.value < 1 || this.value > 50) {
       this.value = 1;
     }
   });
@@ -140,7 +148,7 @@
     // Generate a random search query combining word1 and word2
     var searchQuery = encodeURIComponent(word1 + ' ' + word2);
     // Open a new tab with the search query
-    var win = window.open('https://www.bing.com/search?pglt=163&q=' + word1 + '+' + word2 + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
+    var win = window.open('https://www.bing.com/search?pglt=163&q=' + searchQuery + '&cvid=f8f3a7a7e3d24d01985f89c0333f4a1b&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQLhhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQkxMDE3MGowajGoAgCwAgA&FORM=ANNTA1&PC=U531', '_blank');
     await sleep(5000);
     win.close();
     await sleep(500);
