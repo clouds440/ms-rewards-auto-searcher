@@ -69,6 +69,12 @@
 
   <div class="div">
     <h2 class="font">Automatic Searcher</h2>
+    <h3 class="font">
+      <span id="count">0</span>
+      <span>/</span>
+      <span id="total">0</span>
+      <span> Searches done</span>
+    </h3>
     <form id="searchForm">
       <label for="num" class="font">Enter the number of searches:</label><br>
       <input type="number" id="num" name="num" min="1" max="50" class="input-field">
@@ -76,40 +82,101 @@
   
       <!-- Numerical buttons -->
       <div class="button-container btn-div">
-          <button type="button" class="button" onclick="document.getElementById('num').value = 5;"> 5 </button>
-          <button type="button" class="button" onclick="document.getElementById('num').value = 30;"> 30 </button>
+          <button type="button" class="button" onclick="button(5)"> 5 </button>
+          <button type="button" class="button" onclick="button(30)"> 30 </button>
 
-          <button type="button" class="button" onclick="document.getElementById('num').value = parseInt(document.getElementById('num').value) + 5;">▲5</button>
+          <button type="button" class="button" onclick="incDec(5)">▲5</button>
 
-          <button type="button" class="button" onclick="document.getElementById('num').value = 10;"> 10 </button>
-          <button type="button" class="button" onclick="document.getElementById('num').value = 35;"> 35 </button>
+          <button type="button" class="button" onclick="button(10)"> 10 </button>
+          <button type="button" class="button" onclick="button(35)"> 35 </button>
 
-          <button type="button" class="button" onclick="document.getElementById('num').value = parseInt(document.getElementById('num').value) - 5;">▼5</button>
+          <button type="button" class="button" onclick="incDec(-5)">▼5</button>
 
-          <button type="button" class="button" onclick="document.getElementById('num').value = 20;"> 20 </button>
-          <button type="button" class="button" onclick="document.getElementById('num').value = 40;"> 40 </button>
+          <button type="button" class="button" onclick="button(20)"> 20 </button>
+          <button type="button" class="button" onclick="button(40)"> 40 </button>
       </div>
       <br>
+      <div id="timeDiv" class="font">
+        <span>Total time required: </span>
+        <span id="time">0</span>
+        <span> Seconds</span>
+      </div>
+
+      <div id="timer" class="font"></div>
+
       <input type="submit" value="Search" class="button button-search">
     </form>
   </div>
 
 <script>
+  //set default value for phones and desktops
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       document.getElementById('num').value = 20; // Set default value to 20 for phones
     } else {
       document.getElementById('num').value = 30; // Set default value to 30 for desktops
     }
-
+    // Make sure value is not negative or above 50
     document.getElementById('num').addEventListener('blur', function() {
     if (this.value < 1 || this.value > 50) {
       this.value = 1;
     }
   });
 
+  // numeric buttons value
+  function button(value) {
+    var num = document.getElementById('num');
+    num.value = value;
+
+    // Set time required
+    var time = document.getElementById('time');
+    time.innerHTML = parseInt(num.value) * 5.5;
+  }
+
+  // Increment/decrement buttons
+  function incDec(value) {
+    var num = parseInt(document.getElementById('num').value);
+    num += value;
+    document.getElementById('num').value = num;
+
+    // Set time required
+    var time = document.getElementById('time');
+    time.innerHTML = num * 5.5;
+  }
+
+  // calculate total time required
+  const num = document.getElementById('num');
+  num.addEventListener('input', function(){
+    var time = document.getElementById('time');
+    time.innerHTML = parseInt(this.value) * 5.5;
+  });
+
+  // Time remaining
+  function startTimer(duration) {
+    var timerDisplay = document.getElementById('timer');
+    var timer = duration;
+    document.getElementById('timeDiv').style.visibility = 'hidden';
+    timerDisplay.style.visibility = 'visible';
+
+    var intervalId = setInterval(function() {
+      timerDisplay.textContent = timer + ' seconds remaining';
+      timer--;
+      if (timer < 0) {
+        clearInterval(intervalId); // Pass the interval ID to clearInterval
+        timerDisplay.style.visibility = 'hidden';
+        document.getElementById('timeDiv').style.visibility = 'visible';
+      }
+    }, 1000);
+  }
+
+  // Submit button to perform the searches
   document.getElementById('searchForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     var num = document.getElementById('num').value;
+    var count = document.getElementById('count');
+    var total = document.getElementById('total');
+    total.innerHTML = num;
+
+    startTimer(parseInt(num) * 5.5);
 
   var sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -119,7 +186,10 @@
   return array[Math.floor(Math.random() * array.length)];
   }
 
+  await sleep(1000);
+
   for (var i = 0; i < num; i++) {
+    count.innerHTML = i + 1;
     // Randomly choose one set of arrays
     var setIndex = Math.floor(Math.random() * 13);
     
